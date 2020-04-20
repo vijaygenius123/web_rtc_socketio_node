@@ -2,6 +2,8 @@ const app = require('express')();
 const http = require('http').createServer(app)
 const io = require('socket.io')(http);
 
+const PORT = process.env.PORT || 5000
+
 const users = {}
 app.get('/', (req, res) => {
     res.send('<h1>Web RTC Signalling</h1>');
@@ -31,6 +33,6 @@ io.on('connection', (socket) => {
 });
 
 
-http.listen(5500, () => {
-    console.log('listening on *:5500');
+http.listen(PORT, () => {
+    console.log(`listening on *:${PORT}`);
 });
