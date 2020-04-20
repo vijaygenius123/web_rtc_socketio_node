@@ -16,34 +16,39 @@
 <body>
     <h1>WebRTC Signalling</h1>
 
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h2>Socket IO Signalling Flow</h2>
+            </div>
+            <div class="col">
+                <div class="mermaid">
+                    sequenceDiagram
+                    rect rgb(0, 255, 0)
 
-    <div class="mermaid">
-        sequenceDiagram
-        rect rgb(0, 255, 0)
+                    Note over Client,Server: Initial Connection Setup
+                    Client->>+Server: Event connection
+                    Server->>Client: {myId:myId}
 
-        Note over Client,Server: Initial Connection Setup
-        Client->>+Server: Event connection
-        Server->>Client: {myId:myId}
+                    Note over Client,Server: Emit On currentUsers
+                    Server->>Client: Send List Of Available Users
+                    end
 
-        Note over Client,Server: Emit On currentUsers
-        Server->>Client: Send List Of Available Users
-        end
+                    rect rgb(127,127,0)
+                    Note over Client,Server: Call user With id
+                    Client->>Server: {to: id, from: myId, signal: {}}
+                    Server-->>Client: Send Message To Specific ID
+                    end
 
-        rect rgb(127,127,0)
-        Note over Client,Server: Call user With id
-        Client->>Server: {to: id, from: myId, signal: {}}
-        Server-->>Client: Send Message To Specific ID
-        end
-
-        rect rgb(0,127,127)
-        Note over Client,Server: Accept Call
-        Client->>Server: {to:id, signal: {}}
-        Server-->>Client: Send Message To Specific ID
-        end
-
-
+                    rect rgb(0,127,127)
+                    Note over Client,Server: Accept Call
+                    Client->>Server: {to:id, signal: {}}
+                    Server-->>Client: Send Message To Specific ID
+                    end
+                </div>
+            </div>
+        </div>
     </div>
-
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
