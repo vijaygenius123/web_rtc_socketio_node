@@ -1,12 +1,15 @@
-const app = require('express')();
+const express = require('express');
+const app = express();
 const http = require('http').createServer(app)
 const io = require('socket.io')(http);
 
 const PORT = process.env.PORT || 5000
 
 const users = {}
+app.use(express.static('public'));
+
 app.get('/', (req, res) => {
-    res.send('<h1>Web RTC Signalling</h1>');
+    res.sendFile('index.html');
 });
 
 io.on('connection', (socket) => {
@@ -16,7 +19,7 @@ io.on('connection', (socket) => {
         users[socket.id] = socket.id;
     }
     socket.emit("myId", socket.id);
-    io.sockets.emit("allUsers", users);
+    io.sockets.emit("currentUsers", users);
 
     socket.on('disconnect', () => {
         delete users[socket.id];
